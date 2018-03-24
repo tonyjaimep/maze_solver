@@ -1,8 +1,15 @@
 # Maze solver
-Solves `./maze.png` and outputs it to `./solved.png` using Dijkstra's algorithm and PIL
+Solves PNG maze file using my implementation Dijkstra's algorithm and PIL
+
+## Usage
+`maze.py [-h] [-i INPUT] [-o OUTPUT]`
+
+INPUT defaults to "maze.png"
+OUTPUT defaults to "solved.png"
 
 ## Example
 ![alt Example](example.png)
+
 Here, `maze.png` and `solved.png` are both 5px tall and 5px wide
 
 ## Colors

@@ -1,18 +1,31 @@
+#!/usr/bin/python3
+
 from PIL import Image
 import dijkstra as d
 from math import inf as infinity
+import argparse
 
-COLOR_BLACK = (0, 0, 0)
-COLOR_WHITE = (255, 255, 255)
+# Black
+COLOR_WALL = (0, 0, 0)
+# White
+COLOR_PATH = (255, 255, 255)
 
 # Red
 COLOR_START = (255, 0, 0)
 # Green
 COLOR_END = (0, 255, 0)
 # Blue
-COLOR_PATH = (0, 0, 255)
+COLOR_SOLVED = (0, 0, 255)
 
-image = Image.open("maze.png")
+parser = argparse.ArgumentParser(description="Solve input PNG maze file")
+parser.add_argument("-i", "--input", help="Maze file. Defaults to maze.png",
+                    default="maze.png", required=False)
+parser.add_argument("-o", "--output", default="solved.png",
+                    help="PNG file to output to. Defaults to solved.png")
+
+args = parser.parse_args()
+
+image = Image.open(args.input)
 pixels = image.load()
 
 nodes = [[None for _ in range(image.width)] for __ in range(image.height)]
@@ -20,7 +33,7 @@ nodes = [[None for _ in range(image.width)] for __ in range(image.height)]
 for x in range(image.width):
     for y in range(image.height):
         pixel = pixels[x, y]
-        if pixel == COLOR_BLACK:
+        if pixel == COLOR_WALL:
             nodes[y][x] = None
         else:
             nodes[y][x] = d.Node(x, y)
@@ -55,7 +68,7 @@ while current_node is not initial_node:
             smallest_tentative_distance = neighbor.tentative_distance
             neighbor.visited = True
             current_node = neighbor
-    pixels[current_node.x, current_node.y] = COLOR_PATH
+    pixels[current_node.x, current_node.y] = COLOR_SOLVED
 
 
-image.save("solved.png", "PNG")
+image.save(args.output, "PNG")
