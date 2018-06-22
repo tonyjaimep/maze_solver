@@ -25,8 +25,12 @@ parser.add_argument("-o", "--output", default="solved.png",
 
 args = parser.parse_args()
 
-image = Image.open(args.input)
-pixels = image.load()
+try:
+    image = Image.open(args.input)
+    pixels = image.load()
+except:
+    print("Could not load file", args.input)
+    exit()
 
 nodes = [[None for _ in range(image.width)] for __ in range(image.height)]
 
