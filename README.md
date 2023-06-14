@@ -10,7 +10,7 @@ OUTPUT defaults to "solved.png"
 ## Example
 ![alt Example](example.png)
 
-Here, `maze.png` and `solved.png` are both 5px tall and 5px wide
+Here, `maze.png` and `solved.png` are both 10px tall and 10px wide
 
 ## Colors
 - **White** (#FFFFFF): Paths
