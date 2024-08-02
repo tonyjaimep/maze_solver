@@ -1,5 +1,3 @@
-#!/usr/bin/python3
-
 from PIL import Image
 import dijkstra as d
 from math import inf as infinity
@@ -16,6 +14,21 @@ COLOR_START = (255, 0, 0)
 COLOR_END = (0, 255, 0)
 # Blue
 COLOR_SOLVED = (0, 0, 255)
+
+def color_matches(color_1, color_2):
+    return color_1[0] == color_2[0] and color_1[1] == color_2[1] and color_1[2] == color_2[2]
+
+def is_wall(pixel):
+    return color_matches(pixel, COLOR_WALL)
+
+def is_path(pixel):
+    return color_matches(pixel, COLOR_PATH)
+
+def is_start(pixel):
+    return color_matches(pixel, COLOR_START)
+
+def is_end(pixel):
+    return color_matches(pixel, COLOR_END)
 
 parser = argparse.ArgumentParser(description="Solve input PNG maze file")
 parser.add_argument("-i", "--input", help="Maze file. Defaults to maze.png",
@@ -37,15 +50,16 @@ nodes = [[None for _ in range(image.width)] for __ in range(image.height)]
 for x in range(image.width):
     for y in range(image.height):
         pixel = pixels[x, y]
-        if pixel == COLOR_WALL:
+        if is_wall(pixel):
             nodes[y][x] = None
         else:
             nodes[y][x] = d.Node(x, y)
 
-        if pixel == COLOR_START:
+        if is_start(pixel):
             initial_coords = (x, y)
-        if pixel == COLOR_END:
+        if is_end(pixel):
             destination_coords = (x, y)
+
 
 graph = d.Graph(nodes, initial_coords, destination_coords)
 
